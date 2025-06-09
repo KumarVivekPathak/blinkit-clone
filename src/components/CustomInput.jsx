@@ -5,7 +5,7 @@ import Feather from '@expo/vector-icons/Feather';
 const CustomInput = ({placeholder, value, onChangeText}) => {
     return (
         <View style={styles.container}>
-            <Feather name="search" size={24} color="black" />
+            <Feather name="search" size={20} color="black" style={styles.icon} />
             <TextInput placeholder={placeholder} value={value} onChangeText={onChangeText} style={styles.input}/>
             
         </View>
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderRadius: 20,
         backgroundColor: 'white',
-        padding: 10,
+        padding: 4,
         margin: 16,
         elevation: 5,
         shadowColor: 'black',
@@ -37,5 +37,9 @@ const styles = StyleSheet.create({
         color: 'gray',
         fontSize: 16,
         fontWeight: '500',
-    }
+    },
+    icon: {
+        marginLeft: 5,
+        marginRight: 3,
+    },
 });

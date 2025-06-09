@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import CategoryScreen from "../screens/CategoryScreen";
 import CartScreen from "../screens/CartScreen";
+import ProductScreen from "../screens/ProductScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,8 +47,13 @@ const AppNavigator = () => {
           name="Category"
           component={CategoryScreen}
           options={({ route }) => ({
-            title: route.params?.categoryName || "Category",
+            title: "All "+ route.params?.categoryName +" Products" || "Category",
           })}
+        />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProductScreen}
+          options={{ title: "Product Details" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
