@@ -17,7 +17,6 @@ import axios, { all } from "axios";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = ({navigation}) => {
-  // const {navigation} = useNavigation();
   const [searchQuery, setSearchQuery] = useState("");
   const [Categories, setCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
@@ -28,7 +27,6 @@ const HomeScreen = ({navigation}) => {
       const data = await response.data.categories;
       setCategories(data);
     } catch (error) {
-      console.error("Error fetching categories:", error);
     }
   };
 
@@ -52,7 +50,6 @@ const HomeScreen = ({navigation}) => {
       setAllProducts(products);
       console.log("All Products:", products);
     } catch (error) {
-      console.error("Error fetching products:", error);
     }
   };
 
@@ -71,7 +68,6 @@ const HomeScreen = ({navigation}) => {
       product.brand.toLowerCase().includes(searchQuery.toLowerCase()) || 
       product.category.toLowerCase().includes(searchQuery.toLowerCase());
     });
-    console.log("\n\n\n\n\n\n\ Search Results:", searchProduct);
     setAllProducts(searchProduct);
 
   }

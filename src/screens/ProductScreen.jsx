@@ -26,9 +26,7 @@ const ProductScreen = ({ navigation, route }) => {
       const response = await axios(`${BASE_URL}/products/${productId}`);
       const data = await response.data;
       setProductData(data.product);
-      console.log("Product Details:", data.product);
     } catch (error) {
-      console.error("Error fetching product details:", error);
     }
   };
 
