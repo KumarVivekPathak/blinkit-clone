@@ -55,12 +55,7 @@ const AppNavigator = () => {
           component={ProductScreen}
           options={{ title: "Product Details" }}
         />
-        <Stack.Screen
-          name="Cart"
-          component={CartScreen}
-          headerShown={false}
-          options={{headerShown: false}}
-        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

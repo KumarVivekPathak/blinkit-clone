@@ -34,13 +34,35 @@ const ProductScreen = ({ navigation, route }) => {
     getProductDetails();
   }, []);
 
+  // const handleAddToCart = () => {
+  //   const items = Object.values(cartItems);
+  //   const existingItem = items.find((item) => item.productData.id === productData.id);
+
+  //   addToCart(productData);
+  //   Alert.alert( "Product added to cart successfully!","Please Check Your Cart", [
+  //     { text: "OK", onPress: () => navigation.navigate("Cart") },
+  //   ]);
+  // };
+
+
   const handleAddToCart = () => {
     const items = Object.values(cartItems);
-    const existingItem = items.find((item) => item.productData.id === productData.id);
-
+  
+    const existingItem = items.find((item) => {
+      const itemId = item?.productData?.id ?? item?.id;
+      return itemId === productData.id;
+    });
+  
+    if (existingItem) {
+      Alert.alert("Product already in cart", "You have already added this product.", [
+        { text: "OK", onPress: () => navigation.navigate("Tabs", { screen: "Cart" }) },
+      ]);
+      return;
+    }
+  
     addToCart(productData);
-    Alert.alert( "Product added to cart successfully!","Please Check Your Cart", [
-      { text: "OK", onPress: () => navigation.navigate("Cart") },
+    Alert.alert("Product added to cart successfully!", "Please check your cart.", [
+      { text: "OK", onPress: () => navigation.navigate("Tabs", { screen: "Cart" }) },
     ]);
   };
 
