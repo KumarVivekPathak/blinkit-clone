@@ -7,9 +7,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 export default function App() {
   return (
     <CartProvider>
-    <NavigationContainer>
       <AppNavigator />
-    </NavigationContainer>
   </CartProvider>
   );
 }
