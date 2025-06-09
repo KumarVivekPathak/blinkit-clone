@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextComponent, FlatList, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextComponent,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BASE_URL } from "../utils/config";
 import axios from "axios";
@@ -29,11 +37,11 @@ const CategoryScreen = ({ navigation, route }) => {
     console.log("Category Products:", data);
   };
 
-  const handleProductPress = ({item}) => {
-      navigation.navigate("ProductDetails", {
-        productId: item.id,
-      });
-  }
+  const handleProductPress = ({ item }) => {
+    navigation.navigate("ProductDetails", {
+      productId: item.id,
+    });
+  };
 
   useEffect(() => {
     if (categoryName) {
@@ -41,32 +49,33 @@ const CategoryScreen = ({ navigation, route }) => {
     }
   }, [categoryName]);
 
-
   const renderProductItem = ({ item }) => (
-      <TouchableOpacity style={styles.productItem} onPress={()=>handleProductPress({item})}>
-        <Image
-          source={{ uri: item.image }}
-          style={{ width: 100, height: 100, marginBottom: 10 }}
-        />
-        <View style={styles.productItemDetails}>
+    <TouchableOpacity
+      style={styles.productItem}
+      onPress={() => handleProductPress({ item })}
+    >
+      <Image
+        source={{ uri: item.image }}
+        style={{ width: 100, height: 100, marginBottom: 10 }}
+      />
+      <View style={styles.productItemDetails}>
         <Text style={styles.productItemTitle}>{item.title}</Text>
         <Text>Price: ${item.price}</Text>
         <Text>band: {item.brand}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom"]}>
       <FlatList
-                  data={categoryData}
-                  keyExtractor={(item) => item.id}
-                  renderItem={renderProductItem}
-                  style={styles.productList}
-                  containerStyle={{ paddingHorizontal: 10 }}
-                  showsVerticalScrollIndicator={false}
-                />
+        data={categoryData}
+        keyExtractor={(item) => item.id}
+        renderItem={renderProductItem}
+        style={styles.productList}
+        containerStyle={{ paddingHorizontal: 10 }}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 };
@@ -88,12 +97,13 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     marginBottom: 0,
     // backgroundColor:'red',
-  },productItem: {
+  },
+  productItem: {
     paddingHorizontal: 5,
     paddingVertical: 5,
     backgroundColor: "lightyellow",
-    flexDirection:"row",
-    textAlign: "center",  
+    flexDirection: "row",
+    textAlign: "center",
     marginVertical: 5,
     borderRadius: 5,
     borderColor: "gray",
@@ -102,7 +112,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 5,
     elevation: 2,
-
   },
   productItemTitle: {
     fontSize: 16,

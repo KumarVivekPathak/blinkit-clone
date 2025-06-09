@@ -29,7 +29,7 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Cart" component={CartScreen} />
+      <Tab.Screen name="Cart" component={CartScreen}/>
     </Tab.Navigator>
   );
 };
@@ -54,6 +54,12 @@ const AppNavigator = () => {
           name="ProductDetails"
           component={ProductScreen}
           options={{ title: "Product Details" }}
+        />
+        <Stack.Screen
+          name="Cart"
+          component={CartScreen}
+          headerShown={false}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

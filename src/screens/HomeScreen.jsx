@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../components/CustomInput";
 import { BASE_URL } from "../utils/config";
-import axios from "axios";
+import axios, { all } from "axios";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = ({navigation}) => {
@@ -60,6 +60,22 @@ const HomeScreen = ({navigation}) => {
     setSearchQuery(text);
   };
 
+  const searchProduct = async () => {
+    if (searchQuery.trim() === "") {
+      getAllProducts();
+      return;
+    }
+
+    const searchProduct = allProducts.filter((product) => {
+      return product.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      product.brand.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+    console.log("\n\n\n\n\n\n\ Search Results:", searchProduct);
+    setAllProducts(searchProduct);
+
+  }
+
   useEffect(() => {
     getCategories();
     getAllProducts();
@@ -71,10 +87,14 @@ const HomeScreen = ({navigation}) => {
       });
   }
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   const renderCategoryItem = ({ item }) => {
     return (
       <TouchableOpacity style={styles.categoryItem} onPress={() => navigation.navigate("Category", { categoryName: item })}>
-        <Text style={styles.listItemTitle}>{item}</Text>
+        <Text style={styles.listItemTitle}>{capitalizeFirstLetter(item)}</Text>
       </TouchableOpacity>
     );
   };
@@ -99,6 +119,7 @@ const HomeScreen = ({navigation}) => {
         placeholder={"Search for the product"}
         value={searchQuery}
         onChangeText={handleSearch}
+        searchProduct={searchProduct}
       />
       <ScrollView>
       <View>
@@ -111,7 +132,7 @@ const HomeScreen = ({navigation}) => {
           showsHorizontalScrollIndicator={false}
         />
 
-        <View style={{flex:1,height: "100%"}}>
+        {allProducts.length > 0 ? <View style={{flex:1,height: "100%"}}>
           <Text style={styles.allProductsText}>All Products</Text>
           <FlatList
             data={allProducts}
@@ -121,7 +142,11 @@ const HomeScreen = ({navigation}) => {
             containerStyle={{ paddingHorizontal: 10 }}
             showsVerticalScrollIndicator={false}
           />
+        </View> : 
+        <View style={styles.notFoundContainer}>
+            <Text style={styles.notFoundTxt}>No Product Found</Text>
         </View>
+        }
       </View>
       </ScrollView>
     </SafeAreaView>
@@ -201,4 +226,20 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     // backgroundColor:'red',
   },
+  notFoundContainer: {
+    flex: 1,
+    height: "100%",
+    flexGrow: 1,
+    width: "100%",
+    paddingBottom: 20,
+    justifyContent: "center", 
+    alignItems: "center"
+    
+  },
+  notFoundTxt:{
+    textAlign: "center",
+     marginTop: 20, 
+     fontWeight:'bold', 
+    fontSize: 24,
+    }
 });

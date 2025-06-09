@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,14 +8,17 @@ import {
   ScrollView,
   Touchable,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { BASE_URL } from "../utils/config";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CartContext } from "../context/CartContext";
 
-const ProductScreen = ({ route }) => {
+const ProductScreen = ({ navigation, route }) => {
   const { productId } = route.params;
+  const { addToCart, cartItems } = useContext(CartContext);
   const [productData, setProductData] = useState({});
 
   const getProductDetails = async () => {
@@ -33,6 +36,16 @@ const ProductScreen = ({ route }) => {
     getProductDetails();
   }, []);
 
+  const handleAddToCart = () => {
+    const items = Object.values(cartItems);
+    const existingItem = items.find((item) => item.productData.id === productData.id);
+
+    addToCart(productData);
+    Alert.alert( "Product added to cart successfully!","Please Check Your Cart", [
+      { text: "OK", onPress: () => navigation.navigate("Cart") },
+    ]);
+  };
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#fff" }}
@@ -45,11 +58,14 @@ const ProductScreen = ({ route }) => {
           <Text style={styles.brand}>Brand : {productData.brand}</Text>
           <Text style={styles.price}>${productData.price}</Text>
         </View>
-        <Text style={styles.color} >Color : {productData.color}</Text>
+        <Text style={styles.color}>Color : {productData.color}</Text>
         <Text style={styles.color}>Model : {productData.model}</Text>
         <Text style={styles.description}>{productData.description}</Text>
       </ScrollView>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleAddToCart}
+      >
         <Text style={styles.buttonText}>Add to Cart</Text>
       </TouchableOpacity>
     </SafeAreaView>

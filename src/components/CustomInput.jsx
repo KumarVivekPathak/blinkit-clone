@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
 
-const CustomInput = ({placeholder, value, onChangeText}) => {
+const CustomInput = ({placeholder, value, onChangeText, searchProduct}) => {
     return (
         <View style={styles.container}>
-            <Feather name="search" size={20} color="black" style={styles.icon} />
             <TextInput placeholder={placeholder} value={value} onChangeText={onChangeText} style={styles.input}/>
+            <TouchableOpacity onPress={searchProduct} >
+            <Feather name="search" size={20} color="black" style={styles.icon} />
+            </TouchableOpacity>
             
         </View>
     );
@@ -40,6 +42,6 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginLeft: 5,
-        marginRight: 3,
+        marginRight: 10,
     },
 });
